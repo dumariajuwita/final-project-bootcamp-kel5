@@ -14,9 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::get('/master', function () {
+Route::get('master', function () {
     return view('layouts.master');
 });
+
+Route::resource('products', ProductController::class);
+
+Route::resource('orders', OrderController::class);
+
+Auth::routes();
+

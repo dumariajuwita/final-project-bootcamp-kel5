@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        $products = Product::with('category')->get(['id','name', 'price','slug']);
-        
-        $cartTotal = \Cart::getTotal();
-        $cartCount = \Cart::getContent()->count();
-
-        return view('frontend.homepage', compact('products', 'cartTotal', 'cartCount'));
+        $this->middleware('auth');
     }
 
-    public function getProducts(){
-        $products = Product::with('category')->get(['id','name', 'price','slug']);
-
-        return response()->json([
-            'status' => 200,
-            'products' => $products
-        ]);
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        return view('home');
     }
 }
